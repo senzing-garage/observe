@@ -8,20 +8,18 @@ import (
 	"os"
 	"strings"
 
+	"github.com/senzing/observe/observer"
 	"github.com/senzing/senzing-tools/constant"
 	"github.com/senzing/senzing-tools/envar"
 	"github.com/senzing/senzing-tools/helper"
 	"github.com/senzing/senzing-tools/option"
-	"github.com/senzing/observe/examplepackage"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
 
 const (
-	defaultConfiguration           string = ""
-	defaultEngineConfigurationJson string = ""
-	defaultEngineLogLevel          int    = 0
-	defaultLogLevel                string = "INFO"
+	defaultLogLevel string = "INFO"
+	defaultGrpcPort int    = 8260
 )
 
 // If a configuration file is present, load it.
@@ -69,7 +67,7 @@ func loadOptions(cobraCommand *cobra.Command) {
 	// Ints
 
 	intOptions := map[string]int{
-		option.EngineLogLevel: defaultEngineLogLevel,
+		option.GrpcPort: defaultGrpcPort,
 	}
 	for optionKey, optionValue := range intOptions {
 		viper.SetDefault(optionKey, optionValue)
@@ -79,8 +77,7 @@ func loadOptions(cobraCommand *cobra.Command) {
 	// Strings
 
 	stringOptions := map[string]string{
-		option.EngineConfigurationJson: defaultEngineConfigurationJson,
-		option.LogLevel:                defaultLogLevel,
+		option.LogLevel: defaultLogLevel,
 	}
 	for optionKey, optionValue := range stringOptions {
 		viper.SetDefault(optionKey, optionValue)
@@ -91,9 +88,9 @@ func loadOptions(cobraCommand *cobra.Command) {
 // RootCmd represents the command.
 var RootCmd = &cobra.Command{
 	Use:   "observe",
-	Short: "observe short description",
+	Short: "aggregate observations",
 	Long: `
-observe long description.
+Listen for Observer messages over gRPC and print them to STDOUT.
 	`,
 	PreRun: func(cobraCommand *cobra.Command, args []string) {
 		loadConfigurationFile(cobraCommand)
@@ -103,10 +100,10 @@ observe long description.
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var err error = nil
 		ctx := context.TODO()
-		examplePackage := &examplepackage.ExamplePackageImpl{
-			Something: "Main says 'Hi!'",
+		observer := &observer.ObserverImpl{
+			Port: viper.GetInt(option.GrpcPort),
 		}
-		err = examplePackage.SaySomething(ctx)
+		err = observer.Serve(ctx)
 		return err
 	},
 	Version: helper.MakeVersion(githubVersion, githubIteration),
@@ -123,7 +120,6 @@ func Execute() {
 
 // Since init() is always invoked, define command line parameters.
 func init() {
-	RootCmd.Flags().Int(option.EngineLogLevel, defaultEngineLogLevel, fmt.Sprintf("Log level for Senzing Engine [%s]", envar.EngineLogLevel))
-	RootCmd.Flags().String(option.Configuration, defaultConfiguration, fmt.Sprintf("Path to configuration file [%s]", envar.Configuration))
-	RootCmd.Flags().String(option.EngineConfigurationJson, defaultEngineConfigurationJson, fmt.Sprintf("JSON string sent to Senzing's init() function [%s]", envar.EngineConfigurationJson))
+	RootCmd.Flags().Int(option.GrpcPort, defaultGrpcPort, fmt.Sprintf("Port used to listen to Observer messages over gRPC [%s]", envar.GrpcPort))
+	RootCmd.Flags().String(option.LogLevel, defaultLogLevel, fmt.Sprintf("Log level of TRACE, DEBUG, INFO, WARN, ERROR, FATAL, or PANIC [%s]", envar.LogLevel))
 }
