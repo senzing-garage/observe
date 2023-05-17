@@ -19,11 +19,11 @@ import (
 )
 
 const (
-	defaultLogLevel string = "INFO"
-	defaultGrpcPort int    = 8260
-	Short           string = "Aggregate observations"
-	Use             string = "observe"
-	Long            string = `
+	defaultLogLevel         string = "INFO"
+	defaultObserverGrpcPort int    = 8260
+	Short                   string = "Aggregate observations"
+	Use                     string = "observe"
+	Long                    string = `
 Listen for Observer messages over gRPC and print them to STDOUT.
 	`
 )
@@ -34,8 +34,9 @@ Listen for Observer messages over gRPC and print them to STDOUT.
 
 // Since init() is always invoked, define command line parameters.
 func init() {
-	RootCmd.Flags().Int(option.GrpcPort, defaultGrpcPort, fmt.Sprintf("Port used to listen to Observer messages over gRPC [%s]", envar.GrpcPort))
+	RootCmd.Flags().Int("observer-grpc-port", defaultObserverGrpcPort, fmt.Sprintf("Port used to listen to Observer messages over gRPC [%s]", "SENZING_TOOLS_OBSERVER_GRPC_PORT"))
 	RootCmd.Flags().String(option.LogLevel, defaultLogLevel, fmt.Sprintf("Log level of TRACE, DEBUG, INFO, WARN, ERROR, FATAL, or PANIC [%s]", envar.LogLevel))
+	// RootCmd.Flags().Int(option.ObserverGrpcPort, defaultObserverGrpcPort, fmt.Sprintf("Port used to listen to Observer messages over gRPC [%s]", envar.ObserverGrpcPort))
 }
 
 // If a configuration file is present, load it.
@@ -75,6 +76,7 @@ func loadConfigurationFile(cobraCommand *cobra.Command) {
 
 // Configure Viper with user-specified options.
 func loadOptions(cobraCommand *cobra.Command) {
+	var err error = nil
 	viper.AutomaticEnv()
 	replacer := strings.NewReplacer("-", "_")
 	viper.SetEnvKeyReplacer(replacer)
@@ -83,11 +85,15 @@ func loadOptions(cobraCommand *cobra.Command) {
 	// Ints
 
 	intOptions := map[string]int{
-		option.GrpcPort: defaultGrpcPort,
+		"observer-grpc-port": defaultObserverGrpcPort,
+		// option.ObserverGrpcPort: defaultObserverGrpcPort,
 	}
 	for optionKey, optionValue := range intOptions {
 		viper.SetDefault(optionKey, optionValue)
-		viper.BindPFlag(optionKey, cobraCommand.Flags().Lookup(optionKey))
+		err = viper.BindPFlag(optionKey, cobraCommand.Flags().Lookup(optionKey))
+		if err != nil {
+			panic(err)
+		}
 	}
 
 	// Strings
@@ -97,7 +103,10 @@ func loadOptions(cobraCommand *cobra.Command) {
 	}
 	for optionKey, optionValue := range stringOptions {
 		viper.SetDefault(optionKey, optionValue)
-		viper.BindPFlag(optionKey, cobraCommand.Flags().Lookup(optionKey))
+		err = viper.BindPFlag(optionKey, cobraCommand.Flags().Lookup(optionKey))
+		if err != nil {
+			panic(err)
+		}
 	}
 }
 
@@ -133,7 +142,8 @@ func RunE(_ *cobra.Command, _ []string) error {
 	// Create and run gRPC server.
 
 	observer := &observer.ObserverImpl{
-		Port:          viper.GetInt(option.GrpcPort),
+		Port: viper.GetInt("observer-grpc-port"),
+		// Port:          viper.GetInt(option.ObserverGrpcPort),
 		ServerOptions: serverOptions,
 	}
 	err = observer.Serve(ctx)
