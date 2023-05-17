@@ -42,7 +42,7 @@ func (observerImpl *ObserverImpl) Serve(ctx context.Context) error {
 
 	// Register an observer with the Subject.
 
-	anObserver := &observer.ObserverNull{
+	anObserver := &observer.ObserverRaw{
 		Id: "observe",
 	}
 
