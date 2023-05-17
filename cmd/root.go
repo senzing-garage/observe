@@ -8,21 +8,36 @@ import (
 	"os"
 	"strings"
 
+	"github.com/senzing/observe/observer"
 	"github.com/senzing/senzing-tools/constant"
 	"github.com/senzing/senzing-tools/envar"
 	"github.com/senzing/senzing-tools/helper"
 	"github.com/senzing/senzing-tools/option"
-	"github.com/senzing/observe/examplepackage"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"google.golang.org/grpc"
 )
 
 const (
-	defaultConfiguration           string = ""
-	defaultEngineConfigurationJson string = ""
-	defaultEngineLogLevel          int    = 0
-	defaultLogLevel                string = "INFO"
+	defaultLogLevel         string = "INFO"
+	defaultObserverGrpcPort int    = 8260
+	Short                   string = "Aggregate observations"
+	Use                     string = "observe"
+	Long                    string = `
+Listen for Observer messages over gRPC and print them to STDOUT.
+	`
 )
+
+// ----------------------------------------------------------------------------
+// Private functions
+// ----------------------------------------------------------------------------
+
+// Since init() is always invoked, define command line parameters.
+func init() {
+	RootCmd.Flags().Int("observer-grpc-port", defaultObserverGrpcPort, fmt.Sprintf("Port used to listen to Observer messages over gRPC [%s]", "SENZING_TOOLS_OBSERVER_GRPC_PORT"))
+	RootCmd.Flags().String(option.LogLevel, defaultLogLevel, fmt.Sprintf("Log level of TRACE, DEBUG, INFO, WARN, ERROR, FATAL, or PANIC [%s]", envar.LogLevel))
+	// RootCmd.Flags().Int(option.ObserverGrpcPort, defaultObserverGrpcPort, fmt.Sprintf("Port used to listen to Observer messages over gRPC [%s]", envar.ObserverGrpcPort))
+}
 
 // If a configuration file is present, load it.
 func loadConfigurationFile(cobraCommand *cobra.Command) {
@@ -61,6 +76,7 @@ func loadConfigurationFile(cobraCommand *cobra.Command) {
 
 // Configure Viper with user-specified options.
 func loadOptions(cobraCommand *cobra.Command) {
+	var err error = nil
 	viper.AutomaticEnv()
 	replacer := strings.NewReplacer("-", "_")
 	viper.SetEnvKeyReplacer(replacer)
@@ -69,48 +85,34 @@ func loadOptions(cobraCommand *cobra.Command) {
 	// Ints
 
 	intOptions := map[string]int{
-		option.EngineLogLevel: defaultEngineLogLevel,
+		"observer-grpc-port": defaultObserverGrpcPort,
+		// option.ObserverGrpcPort: defaultObserverGrpcPort,
 	}
 	for optionKey, optionValue := range intOptions {
 		viper.SetDefault(optionKey, optionValue)
-		viper.BindPFlag(optionKey, cobraCommand.Flags().Lookup(optionKey))
+		err = viper.BindPFlag(optionKey, cobraCommand.Flags().Lookup(optionKey))
+		if err != nil {
+			panic(err)
+		}
 	}
 
 	// Strings
 
 	stringOptions := map[string]string{
-		option.EngineConfigurationJson: defaultEngineConfigurationJson,
-		option.LogLevel:                defaultLogLevel,
+		option.LogLevel: defaultLogLevel,
 	}
 	for optionKey, optionValue := range stringOptions {
 		viper.SetDefault(optionKey, optionValue)
-		viper.BindPFlag(optionKey, cobraCommand.Flags().Lookup(optionKey))
+		err = viper.BindPFlag(optionKey, cobraCommand.Flags().Lookup(optionKey))
+		if err != nil {
+			panic(err)
+		}
 	}
 }
 
-// RootCmd represents the command.
-var RootCmd = &cobra.Command{
-	Use:   "observe",
-	Short: "observe short description",
-	Long: `
-observe long description.
-	`,
-	PreRun: func(cobraCommand *cobra.Command, args []string) {
-		loadConfigurationFile(cobraCommand)
-		loadOptions(cobraCommand)
-		cobraCommand.SetVersionTemplate(constant.VersionTemplate)
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		var err error = nil
-		ctx := context.TODO()
-		examplePackage := &examplepackage.ExamplePackageImpl{
-			Something: "Main says 'Hi!'",
-		}
-		err = examplePackage.SaySomething(ctx)
-		return err
-	},
-	Version: helper.MakeVersion(githubVersion, githubIteration),
-}
+// ----------------------------------------------------------------------------
+// Public functions
+// ----------------------------------------------------------------------------
 
 // Execute adds all child commands to the root command and sets flags appropriately.
 // This is called by main.main(). It only needs to happen once to the RootCmd.
@@ -121,9 +123,48 @@ func Execute() {
 	}
 }
 
-// Since init() is always invoked, define command line parameters.
-func init() {
-	RootCmd.Flags().Int(option.EngineLogLevel, defaultEngineLogLevel, fmt.Sprintf("Log level for Senzing Engine [%s]", envar.EngineLogLevel))
-	RootCmd.Flags().String(option.Configuration, defaultConfiguration, fmt.Sprintf("Path to configuration file [%s]", envar.Configuration))
-	RootCmd.Flags().String(option.EngineConfigurationJson, defaultEngineConfigurationJson, fmt.Sprintf("JSON string sent to Senzing's init() function [%s]", envar.EngineConfigurationJson))
+// Used in construction of cobra.Command
+func PreRun(cobraCommand *cobra.Command, args []string) {
+	loadConfigurationFile(cobraCommand)
+	loadOptions(cobraCommand)
+	cobraCommand.SetVersionTemplate(constant.VersionTemplate)
+}
+
+// Used in construction of cobra.Command
+func RunE(_ *cobra.Command, _ []string) error {
+	var err error = nil
+	ctx := context.TODO()
+
+	// TODO: Support various gRPC server options.
+
+	serverOptions := []grpc.ServerOption{}
+
+	// Create and run gRPC server.
+
+	observer := &observer.ObserverImpl{
+		Port: viper.GetInt("observer-grpc-port"),
+		// Port:          viper.GetInt(option.ObserverGrpcPort),
+		ServerOptions: serverOptions,
+	}
+	err = observer.Serve(ctx)
+	return err
+}
+
+// Used in construction of cobra.Command
+func Version() string {
+	return helper.MakeVersion(githubVersion, githubIteration)
+}
+
+// ----------------------------------------------------------------------------
+// Command
+// ----------------------------------------------------------------------------
+
+// RootCmd represents the command.
+var RootCmd = &cobra.Command{
+	Use:     Use,
+	Short:   Short,
+	Long:    Long,
+	PreRun:  PreRun,
+	RunE:    RunE,
+	Version: Version(),
 }
