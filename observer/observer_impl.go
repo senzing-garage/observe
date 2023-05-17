@@ -7,6 +7,7 @@ import (
 	"github.com/senzing/go-observing/grpcserver"
 	"github.com/senzing/go-observing/observer"
 	"github.com/senzing/go-observing/subject"
+	"google.golang.org/grpc"
 )
 
 // ----------------------------------------------------------------------------
@@ -15,7 +16,8 @@ import (
 
 // ObserverImpl is an ObserverInterface.
 type ObserverImpl struct {
-	Port int
+	Port          int
+	ServerOptions []grpc.ServerOption
 }
 
 // ----------------------------------------------------------------------------
@@ -53,8 +55,9 @@ func (observerImpl *ObserverImpl) Serve(ctx context.Context) error {
 	}
 
 	aGrpcServer := &grpcserver.GrpcServerImpl{
-		Port:    observerImpl.Port,
-		Subject: aSubject,
+		Port:          observerImpl.Port,
+		ServerOptions: observerImpl.ServerOptions,
+		Subject:       aSubject,
 	}
 	aGrpcServer.Serve(ctx)
 

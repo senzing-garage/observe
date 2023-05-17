@@ -15,12 +15,28 @@ import (
 	"github.com/senzing/senzing-tools/option"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"google.golang.org/grpc"
 )
 
 const (
 	defaultLogLevel string = "INFO"
 	defaultGrpcPort int    = 8260
+	Short           string = "Aggregate observations"
+	Use             string = "observe"
+	Long            string = `
+Listen for Observer messages over gRPC and print them to STDOUT.
+	`
 )
+
+// ----------------------------------------------------------------------------
+// Private functions
+// ----------------------------------------------------------------------------
+
+// Since init() is always invoked, define command line parameters.
+func init() {
+	RootCmd.Flags().Int(option.GrpcPort, defaultGrpcPort, fmt.Sprintf("Port used to listen to Observer messages over gRPC [%s]", envar.GrpcPort))
+	RootCmd.Flags().String(option.LogLevel, defaultLogLevel, fmt.Sprintf("Log level of TRACE, DEBUG, INFO, WARN, ERROR, FATAL, or PANIC [%s]", envar.LogLevel))
+}
 
 // If a configuration file is present, load it.
 func loadConfigurationFile(cobraCommand *cobra.Command) {
@@ -85,29 +101,9 @@ func loadOptions(cobraCommand *cobra.Command) {
 	}
 }
 
-// RootCmd represents the command.
-var RootCmd = &cobra.Command{
-	Use:   "observe",
-	Short: "aggregate observations",
-	Long: `
-Listen for Observer messages over gRPC and print them to STDOUT.
-	`,
-	PreRun: func(cobraCommand *cobra.Command, args []string) {
-		loadConfigurationFile(cobraCommand)
-		loadOptions(cobraCommand)
-		cobraCommand.SetVersionTemplate(constant.VersionTemplate)
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		var err error = nil
-		ctx := context.TODO()
-		observer := &observer.ObserverImpl{
-			Port: viper.GetInt(option.GrpcPort),
-		}
-		err = observer.Serve(ctx)
-		return err
-	},
-	Version: helper.MakeVersion(githubVersion, githubIteration),
-}
+// ----------------------------------------------------------------------------
+// Public functions
+// ----------------------------------------------------------------------------
 
 // Execute adds all child commands to the root command and sets flags appropriately.
 // This is called by main.main(). It only needs to happen once to the RootCmd.
@@ -118,8 +114,47 @@ func Execute() {
 	}
 }
 
-// Since init() is always invoked, define command line parameters.
-func init() {
-	RootCmd.Flags().Int(option.GrpcPort, defaultGrpcPort, fmt.Sprintf("Port used to listen to Observer messages over gRPC [%s]", envar.GrpcPort))
-	RootCmd.Flags().String(option.LogLevel, defaultLogLevel, fmt.Sprintf("Log level of TRACE, DEBUG, INFO, WARN, ERROR, FATAL, or PANIC [%s]", envar.LogLevel))
+// Used in construction of cobra.Command
+func PreRun(cobraCommand *cobra.Command, args []string) {
+	loadConfigurationFile(cobraCommand)
+	loadOptions(cobraCommand)
+	cobraCommand.SetVersionTemplate(constant.VersionTemplate)
+}
+
+// Used in construction of cobra.Command
+func RunE(_ *cobra.Command, _ []string) error {
+	var err error = nil
+	ctx := context.TODO()
+
+	// TODO: Support various gRPC server options.
+
+	serverOptions := []grpc.ServerOption{}
+
+	// Create and run gRPC server.
+
+	observer := &observer.ObserverImpl{
+		Port:          viper.GetInt(option.GrpcPort),
+		ServerOptions: serverOptions,
+	}
+	err = observer.Serve(ctx)
+	return err
+}
+
+// Used in construction of cobra.Command
+func Version() string {
+	return helper.MakeVersion(githubVersion, githubIteration)
+}
+
+// ----------------------------------------------------------------------------
+// Command
+// ----------------------------------------------------------------------------
+
+// RootCmd represents the command.
+var RootCmd = &cobra.Command{
+	Use:     Use,
+	Short:   Short,
+	Long:    Long,
+	PreRun:  PreRun,
+	RunE:    RunE,
+	Version: Version(),
 }
