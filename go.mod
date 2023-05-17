@@ -34,3 +34,7 @@ require (
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
+
+replace (
+	github.com/senzing/senzing-tools v0.2.4 => /home/senzing/senzing.git/senzing-tools
+)
