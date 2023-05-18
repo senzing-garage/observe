@@ -34,9 +34,8 @@ Listen for Observer messages over gRPC and print them to STDOUT.
 
 // Since init() is always invoked, define command line parameters.
 func init() {
-	RootCmd.Flags().Int("observer-grpc-port", defaultObserverGrpcPort, fmt.Sprintf("Port used to listen to Observer messages over gRPC [%s]", "SENZING_TOOLS_OBSERVER_GRPC_PORT"))
+	RootCmd.Flags().Int(option.ObserverGrpcPort, defaultObserverGrpcPort, fmt.Sprintf("Port used to listen to Observer messages over gRPC [%s]", envar.ObserverGrpcPort))
 	RootCmd.Flags().String(option.LogLevel, defaultLogLevel, fmt.Sprintf("Log level of TRACE, DEBUG, INFO, WARN, ERROR, FATAL, or PANIC [%s]", envar.LogLevel))
-	// RootCmd.Flags().Int(option.ObserverGrpcPort, defaultObserverGrpcPort, fmt.Sprintf("Port used to listen to Observer messages over gRPC [%s]", envar.ObserverGrpcPort))
 }
 
 // If a configuration file is present, load it.
@@ -85,8 +84,7 @@ func loadOptions(cobraCommand *cobra.Command) {
 	// Ints
 
 	intOptions := map[string]int{
-		"observer-grpc-port": defaultObserverGrpcPort,
-		// option.ObserverGrpcPort: defaultObserverGrpcPort,
+		option.ObserverGrpcPort: defaultObserverGrpcPort,
 	}
 	for optionKey, optionValue := range intOptions {
 		viper.SetDefault(optionKey, optionValue)
@@ -142,8 +140,7 @@ func RunE(_ *cobra.Command, _ []string) error {
 	// Create and run gRPC server.
 
 	observer := &observer.ObserverImpl{
-		Port: viper.GetInt("observer-grpc-port"),
-		// Port:          viper.GetInt(option.ObserverGrpcPort),
+		Port:          viper.GetInt(option.ObserverGrpcPort),
 		ServerOptions: serverOptions,
 	}
 	err = observer.Serve(ctx)
