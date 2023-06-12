@@ -11,6 +11,7 @@ import (
 	"github.com/senzing/observe/observer"
 	"github.com/senzing/senzing-tools/constant"
 	"github.com/senzing/senzing-tools/envar"
+	"github.com/senzing/senzing-tools/help"
 	"github.com/senzing/senzing-tools/helper"
 	"github.com/senzing/senzing-tools/option"
 	"github.com/spf13/cobra"
@@ -19,14 +20,58 @@ import (
 )
 
 const (
-	defaultLogLevel         string = "INFO"
-	defaultObserverGrpcPort int    = 8260
-	Short                   string = "Aggregate observations"
-	Use                     string = "observe"
-	Long                    string = `
+	Short string = "Aggregate observations"
+	Use   string = "observe"
+	Long  string = `
 Listen for Observer messages over gRPC and print them to STDOUT.
-	`
+    `
 )
+
+// ----------------------------------------------------------------------------
+// Context variables
+// ----------------------------------------------------------------------------
+
+var ContextBools = []struct {
+	Default bool
+	Envar   string
+	Help    string
+	Option  string
+}{}
+
+var ContextInts = []struct {
+	Default int
+	Envar   string
+	Help    string
+	Option  string
+}{
+	{
+		Default: 8260,
+		Envar:   envar.GrpcPort,
+		Help:    help.GrpcPort,
+		Option:  option.GrpcPort,
+	},
+}
+
+var ContextStrings = []struct {
+	Default string
+	Envar   string
+	Help    string
+	Option  string
+}{
+	{
+		Default: "INFO",
+		Envar:   envar.LogLevel,
+		Help:    help.LogLevel,
+		Option:  option.LogLevel,
+	},
+}
+
+var ContextStringSlices = []struct {
+	Default []string
+	Envar   string
+	Help    string
+	Option  string
+}{}
 
 // ----------------------------------------------------------------------------
 // Private functions
@@ -34,8 +79,18 @@ Listen for Observer messages over gRPC and print them to STDOUT.
 
 // Since init() is always invoked, define command line parameters.
 func init() {
-	RootCmd.Flags().Int(option.ObserverGrpcPort, defaultObserverGrpcPort, fmt.Sprintf("Port used to listen to Observer messages over gRPC [%s]", envar.ObserverGrpcPort))
-	RootCmd.Flags().String(option.LogLevel, defaultLogLevel, fmt.Sprintf("Log level of TRACE, DEBUG, INFO, WARN, ERROR, FATAL, or PANIC [%s]", envar.LogLevel))
+	for _, contextBool := range ContextBools {
+		RootCmd.Flags().Bool(contextBool.Option, contextBool.Default, fmt.Sprintf(contextBool.Help, contextBool.Envar))
+	}
+	for _, contextInt := range ContextInts {
+		RootCmd.Flags().Int(contextInt.Option, contextInt.Default, fmt.Sprintf(contextInt.Help, contextInt.Envar))
+	}
+	for _, contextString := range ContextStrings {
+		RootCmd.Flags().String(contextString.Option, contextString.Default, fmt.Sprintf(contextString.Help, contextString.Envar))
+	}
+	for _, contextStringSlice := range ContextStringSlices {
+		RootCmd.Flags().StringSlice(contextStringSlice.Option, contextStringSlice.Default, fmt.Sprintf(contextStringSlice.Help, contextStringSlice.Envar))
+	}
 }
 
 // If a configuration file is present, load it.
@@ -81,14 +136,21 @@ func loadOptions(cobraCommand *cobra.Command) {
 	viper.SetEnvKeyReplacer(replacer)
 	viper.SetEnvPrefix(constant.SetEnvPrefix)
 
+	// Bools
+
+	for _, contextVar := range ContextBools {
+		viper.SetDefault(contextVar.Option, contextVar.Default)
+		err = viper.BindPFlag(contextVar.Option, cobraCommand.Flags().Lookup(contextVar.Option))
+		if err != nil {
+			panic(err)
+		}
+	}
+
 	// Ints
 
-	intOptions := map[string]int{
-		option.ObserverGrpcPort: defaultObserverGrpcPort,
-	}
-	for optionKey, optionValue := range intOptions {
-		viper.SetDefault(optionKey, optionValue)
-		err = viper.BindPFlag(optionKey, cobraCommand.Flags().Lookup(optionKey))
+	for _, contextVar := range ContextInts {
+		viper.SetDefault(contextVar.Option, contextVar.Default)
+		err = viper.BindPFlag(contextVar.Option, cobraCommand.Flags().Lookup(contextVar.Option))
 		if err != nil {
 			panic(err)
 		}
@@ -96,12 +158,19 @@ func loadOptions(cobraCommand *cobra.Command) {
 
 	// Strings
 
-	stringOptions := map[string]string{
-		option.LogLevel: defaultLogLevel,
+	for _, contextVar := range ContextStrings {
+		viper.SetDefault(contextVar.Option, contextVar.Default)
+		err = viper.BindPFlag(contextVar.Option, cobraCommand.Flags().Lookup(contextVar.Option))
+		if err != nil {
+			panic(err)
+		}
 	}
-	for optionKey, optionValue := range stringOptions {
-		viper.SetDefault(optionKey, optionValue)
-		err = viper.BindPFlag(optionKey, cobraCommand.Flags().Lookup(optionKey))
+
+	// StringSlice
+
+	for _, contextVar := range ContextStringSlices {
+		viper.SetDefault(contextVar.Option, contextVar.Default)
+		err = viper.BindPFlag(contextVar.Option, cobraCommand.Flags().Lookup(contextVar.Option))
 		if err != nil {
 			panic(err)
 		}
@@ -140,7 +209,7 @@ func RunE(_ *cobra.Command, _ []string) error {
 	// Create and run gRPC server.
 
 	observer := &observer.ObserverImpl{
-		Port:          viper.GetInt(option.ObserverGrpcPort),
+		Port:          viper.GetInt(option.GrpcPort),
 		ServerOptions: serverOptions,
 	}
 	err = observer.Serve(ctx)
