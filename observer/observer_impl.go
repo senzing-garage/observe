@@ -34,8 +34,6 @@ Output
     See the example output.
 */
 func (observerImpl *ObserverImpl) Serve(ctx context.Context) error {
-	var err error = nil
-
 	// Create a Subject.
 
 	aSubject := &subject.SubjectImpl{}
@@ -46,7 +44,7 @@ func (observerImpl *ObserverImpl) Serve(ctx context.Context) error {
 		Id: "observe",
 	}
 
-	err = aSubject.RegisterObserver(ctx, anObserver)
+	err := aSubject.RegisterObserver(ctx, anObserver)
 	if err != nil {
 		return err
 	}
