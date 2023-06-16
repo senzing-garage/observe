@@ -80,7 +80,6 @@ func PreRun(cobraCommand *cobra.Command, args []string) {
 
 // Used in construction of cobra.Command
 func RunE(_ *cobra.Command, _ []string) error {
-	var err error = nil
 	ctx := context.Background()
 
 	// TODO: Support various gRPC server options.
@@ -93,8 +92,7 @@ func RunE(_ *cobra.Command, _ []string) error {
 		Port:          viper.GetInt(option.GrpcPort),
 		ServerOptions: serverOptions,
 	}
-	err = observer.Serve(ctx)
-	return err
+	return observer.Serve(ctx)
 }
 
 // Used in construction of cobra.Command
