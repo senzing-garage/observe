@@ -6,11 +6,9 @@ import (
 	"context"
 	"os"
 
+	"github.com/senzing/go-cmdhelping/cmdhelper"
+	"github.com/senzing/go-cmdhelping/option"
 	"github.com/senzing/observe/observer"
-	"github.com/senzing/senzing-tools/cmdhelper"
-	"github.com/senzing/senzing-tools/envar"
-	"github.com/senzing/senzing-tools/help"
-	"github.com/senzing/senzing-tools/option"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"google.golang.org/grpc"
@@ -28,28 +26,12 @@ Listen for Observer messages over gRPC and print them to STDOUT.
 // Context variables
 // ----------------------------------------------------------------------------
 
-var ContextInts = []cmdhelper.ContextInt{
-	{
-		Default: cmdhelper.OsLookupEnvInt(envar.GrpcPort, 8260),
-		Envar:   envar.GrpcPort,
-		Help:    help.GrpcPort,
-		Option:  option.GrpcPort,
-	},
+var ContextVariablesForMultiPlatform = []option.ContextVariable{
+	option.GrpcPort,
+	option.LogLevel,
 }
 
-var ContextStrings = []cmdhelper.ContextString{
-	{
-		Default: cmdhelper.OsLookupEnvString(envar.LogLevel, "INFO"),
-		Envar:   envar.LogLevel,
-		Help:    help.LogLevel,
-		Option:  option.LogLevel,
-	},
-}
-
-var ContextVariables = &cmdhelper.ContextVariables{
-	Ints:    ContextInts,
-	Strings: ContextStrings,
-}
+var ContextVariables = append(ContextVariablesForMultiPlatform, ContextVariablesForOsArch...)
 
 // ----------------------------------------------------------------------------
 // Private functions
@@ -57,7 +39,7 @@ var ContextVariables = &cmdhelper.ContextVariables{
 
 // Since init() is always invoked, define command line parameters.
 func init() {
-	cmdhelper.Init(RootCmd, *ContextVariables)
+	cmdhelper.Init(RootCmd, ContextVariables)
 }
 
 // ----------------------------------------------------------------------------
@@ -75,7 +57,7 @@ func Execute() {
 
 // Used in construction of cobra.Command
 func PreRun(cobraCommand *cobra.Command, args []string) {
-	cmdhelper.PreRun(cobraCommand, args, Use, *ContextVariables)
+	cmdhelper.PreRun(cobraCommand, args, Use, ContextVariables)
 }
 
 // Used in construction of cobra.Command
@@ -89,7 +71,7 @@ func RunE(_ *cobra.Command, _ []string) error {
 	// Create and run gRPC server.
 
 	observer := &observer.ObserverImpl{
-		Port:          viper.GetInt(option.GrpcPort),
+		Port:          viper.GetInt(option.GrpcPort.Arg),
 		ServerOptions: serverOptions,
 	}
 	return observer.Serve(ctx)
