@@ -67,7 +67,6 @@ senzing-tools observe [flags]
    Example:
 
     ```console
-    export SENZING_TOOLS_DATABASE_URL=postgresql://username:password@postgres.example.com:5432/G2
     export LD_LIBRARY_PATH=/opt/senzing/g2/lib/
     senzing-tools observe
     ```
@@ -83,7 +82,6 @@ This usage shows how to initialze a database with a Docker container.
 
     ```console
     docker run \
-        --env SENZING_TOOLS_DATABASE_URL=postgresql://username:password@postgres.example.com:5432/G2 \
         --rm \
         senzing/senzing-tools observe
     ```

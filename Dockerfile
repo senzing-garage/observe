@@ -2,8 +2,8 @@
 # Stages
 # -----------------------------------------------------------------------------
 
-ARG IMAGE_GO_BUILDER=golang:1.20.0
-ARG IMAGE_FINAL=senzing/senzingapi-runtime:3.4.2
+ARG IMAGE_GO_BUILDER=golang:1.20.6
+ARG IMAGE_FINAL=senzing/senzingapi-runtime:3.6.0
 
 # -----------------------------------------------------------------------------
 # Stage: go_builder
@@ -12,10 +12,10 @@ ARG IMAGE_FINAL=senzing/senzingapi-runtime:3.4.2
 # define where we need to copy senzing files from
 FROM ${IMAGE_FINAL} as senzing-runtime
 FROM ${IMAGE_GO_BUILDER} as go_builder
-ENV REFRESHED_AT=2023-02-22
+ENV REFRESHED_AT=2023-07-27
 LABEL Name="senzing/observe-builder" \
       Maintainer="support@senzing.com" \
-      Version="0.0.5"
+      Version="0.1.2"
 
 # Build arguments.
 
@@ -61,10 +61,10 @@ RUN mkdir -p /output \
 # -----------------------------------------------------------------------------
 
 FROM ${IMAGE_FINAL} as final
-ENV REFRESHED_AT=2023-02-22
+ENV REFRESHED_AT=2023-07-27
 LABEL Name="senzing/observe" \
       Maintainer="support@senzing.com" \
-      Version="0.0.5"
+      Version="0.1.2"
 
 # Copy files from prior step.
 
