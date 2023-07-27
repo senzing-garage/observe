@@ -27,7 +27,7 @@ Listen for Observer messages over gRPC and print them to STDOUT.
 // ----------------------------------------------------------------------------
 
 var ContextVariablesForMultiPlatform = []option.ContextVariable{
-	option.GrpcPort,
+	option.ObserverGrpcPort,
 	option.LogLevel,
 }
 
@@ -71,7 +71,7 @@ func RunE(_ *cobra.Command, _ []string) error {
 	// Create and run gRPC server.
 
 	observer := &observer.ObserverImpl{
-		Port:          viper.GetInt(option.GrpcPort.Arg),
+		Port:          viper.GetInt(option.ObserverGrpcPort.Arg),
 		ServerOptions: serverOptions,
 	}
 	return observer.Serve(ctx)

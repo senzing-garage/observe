@@ -3,7 +3,7 @@ module github.com/senzing/observe
 go 1.20
 
 require (
-	github.com/senzing/go-cmdhelping v0.1.2
+	github.com/senzing/go-cmdhelping v0.1.3
 	github.com/senzing/go-observing v0.2.6
 	github.com/spf13/cobra v1.7.0
 	github.com/spf13/viper v1.16.0
@@ -28,7 +28,7 @@ require (
 	golang.org/x/net v0.12.0 // indirect
 	golang.org/x/sys v0.10.0 // indirect
 	golang.org/x/text v0.11.0 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20230720185612-659f7aaaa771 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20230726155614-23370e0ffb3e // indirect
 	google.golang.org/protobuf v1.31.0 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
