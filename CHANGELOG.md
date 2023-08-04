@@ -10,7 +10,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -
 
+## [0.1.3] - 2023-08-04
+
+### Changed in  0.1.3
+
+- Refactor to `template-go`
+- Update dependencies
+  - github.com/senzing/go-cmdhelping v0.1.4
+  - github.com/senzing/go-observing v0.2.7
+
 ## [0.1.2] - 2023-07-25
+
+### Changed in  0.1.2
 
 - In `Dockerfile` updated to
   - `golang:1.20.6`
@@ -18,8 +29,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update dependencies
   - github.com/senzing/go-cmdhelping v0.1.3
   - google.golang.org/grpc v1.57.0
-
-### Changed in  0.1.2
 
 ## [0.1.1] - 2023-06-16
 
