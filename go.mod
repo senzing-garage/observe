@@ -7,7 +7,7 @@ require (
 	github.com/senzing/go-observing v0.2.7
 	github.com/spf13/cobra v1.7.0
 	github.com/spf13/viper v1.17.0
-	google.golang.org/grpc v1.58.2
+	google.golang.org/grpc v1.58.3
 )
 
 require (
