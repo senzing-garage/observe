@@ -1,11 +1,15 @@
-// 0.1.2
-// Created by make-go-github-file.yaml on Fri Jun 16 18:27:41 UTC 2023
+// 0.1.5
+// Created by make-go-github-file.yaml on Mon Oct 23 13:32:53 UTC 2023
+//
+//lint:file-ignore U1000 Ignore all unused code, it's generated
 package cmd
 
-var githubDate string = "2023-07-27"
-var githubIteration string = "0"
-var githubRef string = "refs/tags/0.1.2"
-var githubRefName string = "0.1.2"
-var githubRepository string = "Senzing/observe"
-var githubRepositoryName string = "observe"
-var githubVersion string = "0.1.2"
+var (
+	githubDate           string = "2023-10-23"
+	githubIteration      string = "0"
+	githubRef            string = "refs/tags/0.1.5"
+	githubRefName        string = "0.1.5"
+	githubRepository     string = "Senzing/observe"
+	githubRepositoryName string = "observe"
+	githubVersion        string = "0.1.5"
+)
