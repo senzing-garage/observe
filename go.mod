@@ -5,7 +5,7 @@ go 1.21
 require (
 	github.com/senzing/go-cmdhelping v0.1.9
 	github.com/senzing/go-observing v0.2.8
-	github.com/spf13/cobra v1.7.0
+	github.com/spf13/cobra v1.8.0
 	github.com/spf13/viper v1.17.0
 	google.golang.org/grpc v1.59.0
 )
