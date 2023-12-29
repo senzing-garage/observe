@@ -17,7 +17,7 @@
     ```
 
 1. Using the environment variables values just set, follow steps in
-   [clone-repository](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/clone-repository.md) to install the Git repository.
+   [clone-repository](https://github.com/senzing-garage/knowledge-base/blob/main/HOWTO/clone-repository.md) to install the Git repository.
 
 ## Build
 
@@ -83,7 +83,7 @@
 
 1. When a versioned release is published with a `v0.0.0` format tag,
 the reference can be found by clicking on the following badge at the top of the README.md page:
-[![Go Reference](https://pkg.go.dev/badge/github.com/senzing/observe.svg)](https://pkg.go.dev/github.com/senzing/observe)
+[![Go Reference](https://pkg.go.dev/badge/github.com/senzing-garage/observe.svg)](https://pkg.go.dev/github.com/senzing-garage/observe)
 
 ## Docker
 

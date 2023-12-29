@@ -6,9 +6,9 @@ import (
 	"context"
 	"os"
 
-	"github.com/senzing/go-cmdhelping/cmdhelper"
-	"github.com/senzing/go-cmdhelping/option"
-	"github.com/senzing/observe/observer"
+	"github.com/senzing-garage/go-cmdhelping/cmdhelper"
+	"github.com/senzing-garage/go-cmdhelping/option"
+	"github.com/senzing-garage/observe/observer"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"google.golang.org/grpc"

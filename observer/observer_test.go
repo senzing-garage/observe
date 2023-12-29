@@ -47,6 +47,6 @@ func TestObserverImpl_Serve(test *testing.T) {
 // ----------------------------------------------------------------------------
 
 func ExampleObserverImpl_Serve() {
-	// For more information, visit https://github.com/Senzing/observe/blob/main/observer/observer_test.go
+	// For more information, visit https://github.com/senzing-garage/observe/blob/main/observer/observer_test.go
 	//Output:
 }

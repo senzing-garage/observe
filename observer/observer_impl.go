@@ -3,9 +3,9 @@ package observer
 import (
 	"context"
 
-	"github.com/senzing/go-observing/grpcserver"
-	"github.com/senzing/go-observing/observer"
-	"github.com/senzing/go-observing/subject"
+	"github.com/senzing-garage/go-observing/grpcserver"
+	"github.com/senzing-garage/go-observing/observer"
+	"github.com/senzing-garage/go-observing/subject"
 	"google.golang.org/grpc"
 )
 
