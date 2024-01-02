@@ -2,15 +2,14 @@
 # Stages
 # -----------------------------------------------------------------------------
 
-ARG IMAGE_SENZINGAPI_RUNTIME=senzing/senzingapi-runtime:3.7.1
-ARG IMAGE_GO_BUILDER=golang:1.21.0-bullseye
-ARG IMAGE_FINAL=senzing/senzingapi-runtime:3.7.1
+ARG IMAGE_GO_BUILDER=golang:1.21.4-bullseye
+ARG IMAGE_FINAL=senzing/senzingapi-runtime:3.8.0
 
 # -----------------------------------------------------------------------------
 # Stage: senzingapi_runtime
 # -----------------------------------------------------------------------------
 
-FROM ${IMAGE_SENZINGAPI_RUNTIME} as senzingapi_runtime
+FROM ${IMAGE_FINAL} as senzingapi_runtime
 
 # -----------------------------------------------------------------------------
 # Stage: go_builder
@@ -20,7 +19,7 @@ FROM ${IMAGE_GO_BUILDER} as go_builder
 ENV REFRESHED_AT=2023-10-02
 LABEL Name="senzing/observe-builder" \
       Maintainer="support@senzing.com" \
-      Version="0.1.3"
+      Version="0.2.0"
 
 # Copy local files from the Git repository.
 
@@ -54,7 +53,7 @@ FROM ${IMAGE_FINAL} as final
 ENV REFRESHED_AT=2023-08-01
 LABEL Name="senzing/observe" \
       Maintainer="support@senzing.com" \
-      Version="0.1.3"
+      Version="0.2.0"
 
 # Copy files from prior stage.
 
