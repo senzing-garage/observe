@@ -10,6 +10,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -
 
+## [0.2.0] - 2024-01-02
+
+### Changed in 0.2.0
+
+- Renamed module to `github.com/senzing-garage/observe`
+- Refactor to [template-go](https://github.com/senzing-garage/template-go)
+- Update dependencies
+  - github.com/senzing-garage/go-cmdhelping v0.2.0
+  - github.com/senzing-garage/go-observing v0.3.0
+  - github.com/spf13/cobra v1.8.0
+  - github.com/spf13/viper v1.18.2
+  - google.golang.org/grpc v1.60.1
+
 ## [0.1.4] - 2023-10-23
 
 ### Changed in  0.1.4
