@@ -1,5 +1,5 @@
-// 0.1.5
-// Created by make-go-github-file.yaml on Mon Oct 23 13:32:53 UTC 2023
+// 0.2.1
+// Created by make-go-github-file.yaml on Tue Jan  2 19:45:34 UTC 2024
 //
 //lint:file-ignore U1000 Ignore all unused code, it's generated
 package cmd
@@ -7,9 +7,9 @@ package cmd
 var (
 	githubDate           string = "2024-01-02"
 	githubIteration      string = "0"
-	githubRef            string = "refs/tags/0.2.0"
-	githubRefName        string = "0.2.0"
-	githubRepository     string = "Senzing/observe"
+	githubRef            string = "refs/tags/0.2.1"
+	githubRefName        string = "0.2.1"
+	githubRepository     string = "senzing-garage/observe"
 	githubRepositoryName string = "observe"
-	githubVersion        string = "0.2.0"
+	githubVersion        string = "0.2.1"
 )
