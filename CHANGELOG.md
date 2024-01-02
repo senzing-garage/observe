@@ -10,14 +10,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -
 
+## [0.2.0] - 2024-01-02
+
+### Changed in 0.2.0
+
+- Renamed module to `github.com/senzing-garage/observe`
+- Refactor to [template-go](https://github.com/senzing-garage/template-go)
+- Update dependencies
+  - github.com/senzing-garage/go-cmdhelping v0.2.0
+  - github.com/senzing-garage/go-observing v0.3.0
+  - github.com/spf13/cobra v1.8.0
+  - github.com/spf13/viper v1.18.2
+  - google.golang.org/grpc v1.60.1
+
 ## [0.1.4] - 2023-10-23
 
 ### Changed in  0.1.4
 
-- Refactor to [template-go](https://github.com/Senzing/template-go)
+- Refactor to [template-go](https://github.com/senzing-garage/template-go)
 - Update dependencies
-  - github.com/senzing/go-cmdhelping v0.1.9
-  - github.com/senzing/go-observing v0.2.8
+  - github.com/senzing-garage/go-cmdhelping v0.1.9
+  - github.com/senzing-garage/go-observing v0.2.8
   - github.com/spf13/viper v1.17.0
   - google.golang.org/grpc v1.59.0
 
@@ -27,8 +40,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Refactor to `template-go`
 - Update dependencies
-  - github.com/senzing/go-cmdhelping v0.1.4
-  - github.com/senzing/go-observing v0.2.7
+  - github.com/senzing-garage/go-cmdhelping v0.1.4
+  - github.com/senzing-garage/go-observing v0.2.7
 
 ## [0.1.2] - 2023-07-25
 
@@ -38,7 +51,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `golang:1.20.6`
   - `senzing/senzingapi-runtime:3.6.0`
 - Update dependencies
-  - github.com/senzing/go-cmdhelping v0.1.3
+  - github.com/senzing-garage/go-cmdhelping v0.1.3
   - google.golang.org/grpc v1.57.0
 
 ## [0.1.1] - 2023-06-16
@@ -46,8 +59,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed in  0.1.1
 
 - Update dependencies
-  - github.com/senzing/go-observing v0.2.6
-  - github.com/senzing/senzing-tools v0.2.9-0.20230613173043-18f1bd4cafdb
+  - github.com/senzing-garage/go-observing v0.2.6
+  - github.com/senzing-garage/senzing-tools v0.2.9-0.20230613173043-18f1bd4cafdb
   - github.com/spf13/viper v1.16.0
   - google.golang.org/grpc v1.56.0
 
