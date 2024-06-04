@@ -38,8 +38,8 @@ github.com/sagikazarmark/slog-shim v0.1.0 h1:diDBnUNK9N/354PgrxMywXnAwEr1QZcOr6g
 github.com/sagikazarmark/slog-shim v0.1.0/go.mod h1:SrcSrq8aKtyuqEI1uvTDTK1arOWRIczQRv+GVI1AkeQ=
 github.com/senzing-garage/go-cmdhelping v0.2.1 h1:F40uSBtxP03/5aXAUW9C5kMuCFj8lFvmvDlJDvAq9qE=
 github.com/senzing-garage/go-cmdhelping v0.2.1/go.mod h1:76FIsPpEWQrsY7DLR5f/I0bi5UB43KfmDd7b1jBfot8=
-github.com/senzing-garage/go-observing v0.3.1 h1:EGqe+Uix8VNQ9HCwm5xZkAF0hGoHaC1URAaT/5FW37A=
-github.com/senzing-garage/go-observing v0.3.1/go.mod h1:x60vlRIR0ZdJrHDuK82nzmQG4sN0G6oqdLE9vQl9pVc=
+github.com/senzing-garage/go-observing v0.3.2 h1:jXW5u656aZywe/UEUi7ga7nieBSW4CUO8YKvpNNAFMQ=
+github.com/senzing-garage/go-observing v0.3.2/go.mod h1:5yHCwaaIrwX81JOghAL/1Q1V8eF7SQhyBBdhTb7+rgY=
 github.com/sourcegraph/conc v0.3.0 h1:OQTbbt6P72L20UqAkXXuLOj79LfEanQ+YQFNpLA9ySo=
 github.com/sourcegraph/conc v0.3.0/go.mod h1:Sdozi7LEKbFPqYX2/J+iBAM6HpqSLTASQIKqDmF7Mt0=
 github.com/spf13/afero v1.11.0 h1:WJQKhtpdm3v2IzqG8VMqrr6Rf3UYpEF239Jy9wNepM8=
