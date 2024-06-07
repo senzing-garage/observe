@@ -18,8 +18,8 @@ FROM ${IMAGE_FINAL} as senzingapi_runtime
 FROM ${IMAGE_GO_BUILDER} as go_builder
 ENV REFRESHED_AT=2023-10-02
 LABEL Name="senzing/observe-builder" \
-      Maintainer="support@senzing.com" \
-      Version="0.2.0"
+  Maintainer="support@senzing.com" \
+  Version="0.2.0"
 
 # Copy local files from the Git repository.
 
@@ -43,7 +43,7 @@ RUN make build
 # Copy binaries to /output.
 
 RUN mkdir -p /output \
- && cp -R ${GOPATH}/src/observe/target/*  /output/
+  && cp -R ${GOPATH}/src/observe/target/*  /output/
 
 # -----------------------------------------------------------------------------
 # Stage: final
@@ -52,12 +52,16 @@ RUN mkdir -p /output \
 FROM ${IMAGE_FINAL} as final
 ENV REFRESHED_AT=2023-08-01
 LABEL Name="senzing/observe" \
-      Maintainer="support@senzing.com" \
-      Version="0.2.0"
+  Maintainer="support@senzing.com" \
+  Version="0.2.0"
 
 # Copy files from prior stage.
 
 COPY --from=go_builder "/output/linux-amd64/observe" "/app/observe"
+
+HEALTHCHECK CMD ["/healthcheck.sh"]
+
+USER 1001
 
 # Runtime environment variables.
 
