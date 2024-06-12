@@ -12,9 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.2.2] - 2024-06-12
 
-### Changed in 0.2.1
+### Changed in 0.2.2
 
--
+- From `ObserverInterface` to `Observer`
+- From `ObserverImpl` to `SimpleObserver`
 
 ## [0.2.1] - 2024-04-19
 
