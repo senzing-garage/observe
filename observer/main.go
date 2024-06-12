@@ -8,8 +8,8 @@ import (
 // Types
 // ----------------------------------------------------------------------------
 
-// The ObserverInterface interface for the Observer service.
-type ObserverInterface interface {
+// The Observer interface for the Observer service.
+type Observer interface {
 	Serve(ctx context.Context) error
 }
 
@@ -18,4 +18,4 @@ type ObserverInterface interface {
 // ----------------------------------------------------------------------------
 
 // Identfier of the  package found messages having the format "senzing-6207xxxx".
-const ComponentId = 6207
+const ComponentID = 6207

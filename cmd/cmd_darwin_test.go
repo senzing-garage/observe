@@ -1,22 +1,20 @@
-package observer
+//go:build darwin
+
+package cmd
 
 import (
-	"context"
+	"bytes"
 	"testing"
 
 	"github.com/stretchr/testify/require"
 )
 
 // ----------------------------------------------------------------------------
-// Test interface functions
+// Test private functions
 // ----------------------------------------------------------------------------
 
-func TestSimpleObserver_Serve(test *testing.T) {
-	_ = test
-	ctx := context.TODO()
-	testObject := &SimpleObserver{
-		AvoidServing: true,
-	}
-	err := testObject.Serve(ctx)
+func Test_docsAction(test *testing.T) {
+	var buffer bytes.Buffer
+	err := docsAction(&buffer, "/tmp")
 	require.NoError(test, err)
 }

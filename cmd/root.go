@@ -8,6 +8,7 @@ import (
 
 	"github.com/senzing-garage/go-cmdhelping/cmdhelper"
 	"github.com/senzing-garage/go-cmdhelping/option"
+	"github.com/senzing-garage/go-cmdhelping/option/optiontype"
 	"github.com/senzing-garage/observe/observer"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -22,6 +23,14 @@ Listen for Observer messages over gRPC and print them to STDOUT.
     `
 )
 
+var avoidServe = option.ContextVariable{
+	Arg:     "avoid-serving",
+	Default: option.OsLookupEnvBool("SENZING_TOOLS_AVOID_SERVING", false),
+	Envar:   "SENZING_TOOLS_AVOID_SERVING",
+	Help:    "Avoid serving.  For testing only. [%s]",
+	Type:    optiontype.Bool,
+}
+
 // ----------------------------------------------------------------------------
 // Context variables
 // ----------------------------------------------------------------------------
@@ -29,6 +38,7 @@ Listen for Observer messages over gRPC and print them to STDOUT.
 var ContextVariablesForMultiPlatform = []option.ContextVariable{
 	option.ObserverGrpcPort,
 	option.LogLevel,
+	avoidServe,
 }
 
 var ContextVariables = append(ContextVariablesForMultiPlatform, ContextVariablesForOsArch...)
@@ -70,7 +80,8 @@ func RunE(_ *cobra.Command, _ []string) error {
 
 	// Create and run gRPC server.
 
-	observer := &observer.ObserverImpl{
+	observer := &observer.SimpleObserver{
+		AvoidServing:  viper.GetBool(avoidServe.Arg),
 		Port:          viper.GetInt(option.ObserverGrpcPort.Arg),
 		ServerOptions: serverOptions,
 	}
