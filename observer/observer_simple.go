@@ -13,8 +13,9 @@ import (
 // Types
 // ----------------------------------------------------------------------------
 
-// ObserverImpl is an ObserverInterface.
-type ObserverImpl struct {
+// SimpleObserver is an ObserverInterface.
+type SimpleObserver struct {
+	AvoidServing  bool
 	Port          int
 	ServerOptions []grpc.ServerOption
 }
@@ -33,15 +34,15 @@ Output
   - Nothing is returned, except for an error.  However, something is printed.
     See the example output.
 */
-func (observerImpl *ObserverImpl) Serve(ctx context.Context) error {
+func (observerImpl *SimpleObserver) Serve(ctx context.Context) error {
 	// Create a Subject.
 
-	aSubject := &subject.SubjectImpl{}
+	aSubject := &subject.SimpleSubject{}
 
 	// Register an observer with the Subject.
 
-	anObserver := &observer.ObserverRaw{
-		Id: "observe",
+	anObserver := &observer.RawObserver{
+		ID: "observe",
 	}
 
 	err := aSubject.RegisterObserver(ctx, anObserver)
@@ -51,12 +52,15 @@ func (observerImpl *ObserverImpl) Serve(ctx context.Context) error {
 
 	// Run an Observer gRPC service.
 
-	aGrpcServer := &grpcserver.GrpcServerImpl{
+	aGrpcServer := &grpcserver.SimpleGrpcServer{
 		Port:          observerImpl.Port,
 		ServerOptions: observerImpl.ServerOptions,
 		Subject:       aSubject,
 	}
-	err = aGrpcServer.Serve(ctx)
+
+	if !observerImpl.AvoidServing {
+		err = aGrpcServer.Serve(ctx)
+	}
 
 	return err
 }
