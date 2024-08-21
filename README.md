@@ -50,7 +50,7 @@ messages over gRPC.
 ## Use
 
 ```console
-export LD_LIBRARY_PATH=/opt/senzing/g2/lib/
+export LD_LIBRARY_PATH=/opt/senzing/er/lib/
 senzing-tools observe [flags]
 ```
 
@@ -59,7 +59,7 @@ senzing-tools observe [flags]
     1. Runtime documentation:
 
         ```console
-        export LD_LIBRARY_PATH=/opt/senzing/g2/lib/
+        export LD_LIBRARY_PATH=/opt/senzing/er/lib/
         senzing-tools observe --help
         ```
 
@@ -71,7 +71,7 @@ senzing-tools observe [flags]
    Example:
 
     ```console
-    export LD_LIBRARY_PATH=/opt/senzing/g2/lib/
+    export LD_LIBRARY_PATH=/opt/senzing/er/lib/
     senzing-tools observe
     ```
 
@@ -83,7 +83,7 @@ senzing-tools observe [flags]
    Example:
 
     ```console
-    export LD_LIBRARY_PATH=/opt/senzing/g2/lib/
+    export LD_LIBRARY_PATH=/opt/senzing/er/lib/
     senzing-tools observe
     ```
 
