@@ -47,7 +47,7 @@ RUN make build
 # Copy binaries to /output.
 
 RUN mkdir -p /output \
-      && cp -R ${GOPATH}/src/observe/target/*  /output/
+ && cp -R ${GOPATH}/src/observe/target/*  /output/
 
 # -----------------------------------------------------------------------------
 # Stage: final
@@ -69,7 +69,7 @@ COPY ./rootfs /
 
 # Copy files from prior stage.
 
-COPY --from=go_builder "/output/linux-amd64/observe" "/app/observe"
+COPY --from=builder "/output/linux-amd64/observe" "/app/observe"
 
 # Run as non-root container
 
