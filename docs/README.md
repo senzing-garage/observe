@@ -1,5 +1,8 @@
 # observe
 
-Placeholder for [GitHub pages](https://pages.github.com/).
+Placeholder for [GitHub pages].
 
-See [https://hub.senzing.com/observe](https://hub.senzing.com/observe).
+See [GitHub page].
+
+[GitHub page]: https://garage.senzing.com/observe
+[GitHub pages]: https://pages.github.com/
