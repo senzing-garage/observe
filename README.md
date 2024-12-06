@@ -106,13 +106,13 @@ This usage shows how to initialze a database with a Docker container.
 
 ## References
 
-1. [API documentation]
+1. [SDK documentation]
 1. [Development]
 1. [Errors]
 1. [Examples]
 1. [Package reference]
 
-[API documentation]: https://pkg.go.dev/github.com/senzing-garage/observe
+[SDK documentation]: https://pkg.go.dev/github.com/senzing-garage/observe
 [Development]: docs/development.md
 [Errors]: docs/errors.md
 [Examples]: docs/examples.md
