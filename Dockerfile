@@ -69,7 +69,7 @@ COPY ./rootfs /
 
 # Copy files from prior stage.
 
-COPY --from=builder /output/linux-amd64/observe /app/observe
+COPY --from=builder /output/linux/observe /app/observe
 
 # Run as non-root container
 
