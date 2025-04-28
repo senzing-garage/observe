@@ -87,7 +87,7 @@ senzing-tools observe [flags]
 
 ### Using Docker
 
-This usage shows how to initialze a database with a Docker container.
+This usage shows how to initialize a database with a Docker container.
 
 1. :pencil2: Run `senzing/senzing-tools`.
    Example:
