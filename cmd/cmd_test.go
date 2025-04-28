@@ -15,6 +15,8 @@ import (
 func Test_CompletionCmd(test *testing.T) {
 	test.Parallel()
 
+	os.Args = []string{"command-name", "--avoid-serving"}
+
 	err := cmd.CompletionCmd.Execute()
 	require.NoError(test, err)
 	err = cmd.CompletionCmd.RunE(cmd.CompletionCmd, []string{})
@@ -23,6 +25,8 @@ func Test_CompletionCmd(test *testing.T) {
 
 func Test_DocsCmd(test *testing.T) {
 	test.Parallel()
+
+	os.Args = []string{"command-name", "--avoid-serving"}
 
 	err := cmd.DocsCmd.Execute()
 	require.NoError(test, err)
@@ -70,8 +74,8 @@ func Test_PreRun(test *testing.T) {
 }
 
 func Test_RunE(test *testing.T) {
-	test.Setenv("SENZING_TOOLS_AVOID_SERVING", "True")
-
+	test.Setenv("SENZING_TOOLS_AVOID_SERVING", "true")
+	cmd.PreRun(cmd.RootCmd, []string{})
 	err := cmd.RunE(cmd.RootCmd, []string{})
 	require.NoError(test, err)
 }

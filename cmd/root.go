@@ -4,7 +4,6 @@ package cmd
 
 import (
 	"context"
-	"fmt"
 	"os"
 
 	"github.com/senzing-garage/go-cmdhelping/cmdhelper"
@@ -86,8 +85,6 @@ func RunE(_ *cobra.Command, _ []string) error {
 	serverOptions := []grpc.ServerOption{}
 
 	// Create and run gRPC server.
-
-	fmt.Printf(">>>>>>> avoidServe.Arg %t\n", viper.GetBool(avoidServe.Arg))
 
 	observer := &observer.SimpleObserver{
 		AvoidServing:  viper.GetBool(avoidServe.Arg),
