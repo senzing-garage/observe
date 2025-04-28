@@ -1,9 +1,9 @@
-package observer
+package observer_test
 
 import (
-	"context"
 	"testing"
 
+	"github.com/senzing-garage/observe/observer"
 	"github.com/stretchr/testify/require"
 )
 
@@ -12,9 +12,9 @@ import (
 // ----------------------------------------------------------------------------
 
 func TestSimpleObserver_Serve(test *testing.T) {
-	_ = test
-	ctx := context.TODO()
-	testObject := &SimpleObserver{
+	test.Parallel()
+	ctx := test.Context()
+	testObject := &observer.SimpleObserver{
 		AvoidServing: true,
 	}
 	err := testObject.Serve(ctx)

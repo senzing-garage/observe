@@ -2,7 +2,10 @@ package observer
 
 import (
 	"context"
+	"fmt"
+	"os"
 
+	"github.com/senzing-garage/go-helpers/wraperror"
 	"github.com/senzing-garage/go-observing/grpcserver"
 	"github.com/senzing-garage/go-observing/observer"
 	"github.com/senzing-garage/go-observing/subject"
@@ -36,7 +39,6 @@ Output
 */
 func (observerImpl *SimpleObserver) Serve(ctx context.Context) error {
 	// Create a Subject.
-
 	aSubject := &subject.SimpleSubject{}
 
 	// Register an observer with the Subject.
@@ -47,7 +49,7 @@ func (observerImpl *SimpleObserver) Serve(ctx context.Context) error {
 
 	err := aSubject.RegisterObserver(ctx, anObserver)
 	if err != nil {
-		return err
+		return wraperror.Errorf(err, "observer.Serve.RegisterObserver error: %w", err)
 	}
 
 	// Run an Observer gRPC service.
@@ -58,9 +60,14 @@ func (observerImpl *SimpleObserver) Serve(ctx context.Context) error {
 		Subject:       aSubject,
 	}
 
+	fmt.Printf(">>>>>>> SENZING_TOOLS_AVOID_SERVING: %s\n", os.Getenv("SENZING_TOOLS_AVOID_SERVING"))
+	fmt.Printf(">>>>>>> observerImpl.AvoidServing %t\n", observerImpl.AvoidServing)
+
 	if !observerImpl.AvoidServing {
 		err = aGrpcServer.Serve(ctx)
 	}
 
-	return err
+	fmt.Printf(">>>>>>> observerImpl.AvoidServing done\n")
+
+	return wraperror.Errorf(err, "observer.Serve error: %w", err)
 }

@@ -4,11 +4,13 @@ package cmd
 
 import (
 	"context"
+	"fmt"
 	"os"
 
 	"github.com/senzing-garage/go-cmdhelping/cmdhelper"
 	"github.com/senzing-garage/go-cmdhelping/option"
 	"github.com/senzing-garage/go-cmdhelping/option/optiontype"
+	"github.com/senzing-garage/go-helpers/wraperror"
 	"github.com/senzing-garage/observe/observer"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -79,18 +81,25 @@ func PreRun(cobraCommand *cobra.Command, args []string) {
 func RunE(_ *cobra.Command, _ []string) error {
 	ctx := context.Background()
 
-	// TODO: Support various gRPC server options.
+	// IMPROVE: Support various gRPC server options.
 
 	serverOptions := []grpc.ServerOption{}
 
 	// Create and run gRPC server.
+
+	fmt.Printf(">>>>>>> avoidServe.Arg %t\n", viper.GetBool(avoidServe.Arg))
 
 	observer := &observer.SimpleObserver{
 		AvoidServing:  viper.GetBool(avoidServe.Arg),
 		Port:          viper.GetInt(option.ObserverGrpcPort.Arg),
 		ServerOptions: serverOptions,
 	}
-	return observer.Serve(ctx)
+
+	if err := observer.Serve(ctx); err != nil {
+		return wraperror.Errorf(err, "observe.cmd.RunE error: %w", err)
+	}
+
+	return nil
 }
 
 // Used in construction of cobra.Command.

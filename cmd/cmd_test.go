@@ -31,43 +31,54 @@ func Test_DocsCmd(test *testing.T) {
 }
 
 func Test_Execute(test *testing.T) {
-	_ = test
+	test.Parallel()
+
 	os.Args = []string{"command-name", "--avoid-serving"}
+
 	cmd.Execute()
 }
 
 func Test_Execute_completion(test *testing.T) {
-	_ = test
+	test.Parallel()
+
 	os.Args = []string{"command-name", "completion"}
+
 	cmd.Execute()
 }
 
 func Test_Execute_docs(test *testing.T) {
-	_ = test
+	test.Parallel()
+
 	os.Args = []string{"command-name", "docs"}
+
 	cmd.Execute()
 }
 
 func Test_Execute_help(test *testing.T) {
-	_ = test
+	test.Parallel()
+
 	os.Args = []string{"command-name", "--help"}
+
 	cmd.Execute()
 }
 
 func Test_PreRun(test *testing.T) {
-	_ = test
+	test.Parallel()
+
 	args := []string{"command-name", "--help"}
 	cmd.PreRun(cmd.RootCmd, args)
 }
 
 func Test_RunE(test *testing.T) {
-	test.Setenv("SENZING_TOOLS_AVOID_SERVING", "true")
+	test.Setenv("SENZING_TOOLS_AVOID_SERVING", "True")
+
 	err := cmd.RunE(cmd.RootCmd, []string{})
 	require.NoError(test, err)
 }
 
 func Test_RootCmd(test *testing.T) {
-	_ = test
+	test.Parallel()
+
 	err := cmd.RootCmd.Execute()
 	require.NoError(test, err)
 	err = cmd.RootCmd.RunE(cmd.RootCmd, []string{})
