@@ -13,7 +13,7 @@ linters:
     - copyloopvar
     - cyclop
     - decorder
-    # - depguard
+    - depguard
     - dogsled
     - dupl
     - dupword
@@ -24,23 +24,24 @@ linters:
     - errname
     - errorlint
     - exhaustive
-    # - exhaustruct
+    - exhaustruct
     - exptostd
     - fatcontext
-    # - forbidigo
+    - forbidigo
     - forcetypeassert
+    - funcorder
     - funlen
     - ginkgolinter
     - gocheckcompilerdirectives
-    # - gochecknoglobals
-    # - gochecknoinits
+    - gochecknoglobals
+    - gochecknoinits
     - gochecksumtype
     - gocognit
     - goconst
     - gocritic
     - gocyclo
-    # - godot
-    # - godox
+    - godot
+    - godox
     - goheader
     - gomoddirectives
     - gomodguard
@@ -69,12 +70,12 @@ linters:
     - nilerr
     - nilnesserr
     - nilnil
-    # - nlreturn
+    - nlreturn
     - noctx
     - nolintlint
     - nonamedreturns
     - nosprintfhostport
-    # - paralleltest
+    - paralleltest
     - perfsprint
     - prealloc
     - predeclared
@@ -90,22 +91,25 @@ linters:
     - staticcheck
     - tagalign
     - tagliatelle
-    # - testableexamples
+    - testableexamples
     - testifylint
-    # - testpackage
+    - testpackage
     - thelper
     - tparallel
     - unconvert
     - unparam
     - unused
     - usestdlibvars
-    # - usetesting
+    - usetesting
     - varnamelen
     - wastedassign
     - whitespace
-    # - wrapcheck
-    # - wsl
+    - wrapcheck
+    - wsl
     - zerologlint
+  disable:
+    - gochecknoglobals
+    - gochecknoinits
   exclusions:
     generated: lax
     presets:
@@ -117,12 +121,36 @@ linters:
       - third_party$
       - builtin$
       - examples$
+  settings:
+    depguard:
+      rules:
+        prevent_unmaintained_packages:
+          list-mode: lax # allow unless explicitely denied
+          allow:
+            - github.com/stretchr/testify/*
+          deny:
+            - pkg: io/ioutil
+              desc: "replaced by io and os packages since Go 1.16: https://tip.golang.org/doc/go1.16#ioutil"
+    exhaustruct:
+      exclude:
+        - '.+/cobra\.Command$'
+        - '.+/grpcserver\.SimpleGrpcServer$'
+        - '.+/observer\.RawObserver$'
+        - '.+/observer\.SimpleObserver$'
+        - '.+/subject\.SimpleSubject$'
+
+    ireturn:
+      allow:
+        - anon
+        - empty
+        - error
+        - stdlib
 
 formatters:
   enable:
     - gci
     - gofmt
-    # - gofumpt
+    - gofumpt
     - goimports
     - golines
   exclusions:
@@ -131,3 +159,6 @@ formatters:
       - third_party$
       - builtin$
       - examples$
+  settings:
+    golines:
+      max-len: 120

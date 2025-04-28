@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning].
 
 -
 
+## [0.3.2] - 2025-04-28
+
+### Changed in 0.3.2
+
+- Update dependencies
+
 ## [0.3.1] - 2024-09-09
 
 ### Changed in 0.3.1
@@ -94,7 +100,6 @@ and this project adheres to [Semantic Versioning].
 ### Added to 0.1.0
 
 - Initial functionality
-
 
 [Keep a Changelog]: https://keepachangelog.com/en/1.0.0/
 [markdownlint]: https://dlaa.me/markdownlint/
