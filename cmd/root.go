@@ -93,7 +93,7 @@ func RunE(_ *cobra.Command, _ []string) error {
 	}
 
 	if err := observer.Serve(ctx); err != nil {
-		return wraperror.Errorf(err, "observe.cmd.RunE error: %w", err)
+		return wraperror.Errorf(err, "Serve")
 	}
 
 	return nil

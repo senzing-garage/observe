@@ -47,7 +47,7 @@ func (observerImpl *SimpleObserver) Serve(ctx context.Context) error {
 
 	err := aSubject.RegisterObserver(ctx, anObserver)
 	if err != nil {
-		return wraperror.Errorf(err, "observer.Serve.RegisterObserver error: %w", err)
+		return wraperror.Errorf(err, "RegisterObserver")
 	}
 
 	// Run an Observer gRPC service.
@@ -62,5 +62,5 @@ func (observerImpl *SimpleObserver) Serve(ctx context.Context) error {
 		err = aGrpcServer.Serve(ctx)
 	}
 
-	return wraperror.Errorf(err, "observer.Serve error: %w", err)
+	return wraperror.Errorf(err, wraperror.NoMessage)
 }

@@ -138,14 +138,12 @@ linters:
         - '.+/observer\.RawObserver$'
         - '.+/observer\.SimpleObserver$'
         - '.+/subject\.SimpleSubject$'
-
     ireturn:
       allow:
         - anon
         - empty
         - error
         - stdlib
-
 formatters:
   enable:
     - gci
