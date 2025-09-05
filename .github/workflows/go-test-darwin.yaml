@@ -34,7 +34,7 @@ jobs:
 
       - name: Run go test
         run: |
-          go test -exec "${GITHUB_WORKSPACE}/bin/macos_exec_dyld.sh" -json -v -p 1 -coverprofile="./cover-${{ matrix.senzingsdk-version }}.out" -covermode=atomic -coverpkg=./... ./...  2>&1 | tee "/tmp/gotest-${{ matrix.senzingsdk-version }}.log" | gotestfmt
+          go test -json -v -p 1 -coverprofile="./cover-${{ matrix.senzingsdk-version }}.out" -covermode=atomic -coverpkg=./... ./...  2>&1 | tee "/tmp/gotest-${{ matrix.senzingsdk-version }}.log" | gotestfmt
 
       - name: Store coverage file
         uses: actions/upload-artifact@v4
