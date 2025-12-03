@@ -27,6 +27,7 @@
     "gotestfmt",
     "gotesttools",
     "govulncheck",
+    "grpcserver",
     "ICLA",
     "LDFLAGS",
     "OSARCH",

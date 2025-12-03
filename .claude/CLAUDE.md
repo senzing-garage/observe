@@ -9,13 +9,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Common Commands
 
 ### Build
+
 ```bash
 make clean build        # Build binary for current platform
 make build-all          # Build for all platforms (darwin/linux/windows, amd64/arm64)
 ```
+
 Binaries output to `target/<os>-<arch>/observe`
 
 ### Test
+
 ```bash
 make clean setup test   # Run all tests
 go test -v ./...        # Run tests directly
@@ -23,6 +26,7 @@ go test -v -run TestName ./path/to/package  # Run single test
 ```
 
 ### Lint
+
 ```bash
 make lint               # Run golangci-lint, govulncheck, and cspell
 make golangci-lint      # Run only golangci-lint
@@ -30,6 +34,7 @@ make fix                # Auto-fix lint issues where possible
 ```
 
 ### Other
+
 ```bash
 make dependencies              # Update Go dependencies
 make dependencies-for-development  # Install dev tools (golangci-lint, godoc, etc.)
@@ -49,6 +54,7 @@ go run main.go                # Run directly
   - `observer_simple.go` - `SimpleObserver` struct that runs gRPC server using `go-observing` library
 
 The tool creates a gRPC server that:
+
 1. Creates a Subject (`go-observing/subject.SimpleSubject`)
 2. Registers a `RawObserver` with the subject
 3. Serves via `grpcserver.SimpleGrpcServer`
