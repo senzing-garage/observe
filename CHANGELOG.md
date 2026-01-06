@@ -68,7 +68,7 @@ This project adheres to [Semantic Versioning].
 
 ## [0.1.4] - 2023-10-23
 
-### Changed in  0.1.4
+### Changed in 0.1.4
 
 - Refactor to [template-go](https://github.com/senzing-garage/template-go)
 - Update dependencies
@@ -79,7 +79,7 @@ This project adheres to [Semantic Versioning].
 
 ## [0.1.3] - 2023-08-04
 
-### Changed in  0.1.3
+### Changed in 0.1.3
 
 - Refactor to `template-go`
 - Update dependencies
@@ -88,7 +88,7 @@ This project adheres to [Semantic Versioning].
 
 ## [0.1.2] - 2023-07-25
 
-### Changed in  0.1.2
+### Changed in 0.1.2
 
 - In `Dockerfile` updated to
   - `golang:1.20.6`
@@ -99,7 +99,7 @@ This project adheres to [Semantic Versioning].
 
 ## [0.1.1] - 2023-06-16
 
-### Changed in  0.1.1
+### Changed in 0.1.1
 
 - Update dependencies
   - github.com/senzing-garage/go-observing v0.2.6
