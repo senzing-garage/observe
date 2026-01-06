@@ -2,12 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog], [markdownlint],
-and this project adheres to [Semantic Versioning].
+The changelog format is based on [Keep a Changelog] and [CommonMark].
+This project adheres to [Semantic Versioning].
 
 ## [Unreleased]
 
 -
+
+## [0.3.4] - 2026-01-06
+
+### Changed in 0.3.4
+
+- Update dependencies
 
 ## [0.3.3] - 2025-05-21
 
@@ -62,7 +68,7 @@ and this project adheres to [Semantic Versioning].
 
 ## [0.1.4] - 2023-10-23
 
-### Changed in  0.1.4
+### Changed in 0.1.4
 
 - Refactor to [template-go](https://github.com/senzing-garage/template-go)
 - Update dependencies
@@ -73,7 +79,7 @@ and this project adheres to [Semantic Versioning].
 
 ## [0.1.3] - 2023-08-04
 
-### Changed in  0.1.3
+### Changed in 0.1.3
 
 - Refactor to `template-go`
 - Update dependencies
@@ -82,7 +88,7 @@ and this project adheres to [Semantic Versioning].
 
 ## [0.1.2] - 2023-07-25
 
-### Changed in  0.1.2
+### Changed in 0.1.2
 
 - In `Dockerfile` updated to
   - `golang:1.20.6`
@@ -93,7 +99,7 @@ and this project adheres to [Semantic Versioning].
 
 ## [0.1.1] - 2023-06-16
 
-### Changed in  0.1.1
+### Changed in 0.1.1
 
 - Update dependencies
   - github.com/senzing-garage/go-observing v0.2.6
@@ -107,6 +113,6 @@ and this project adheres to [Semantic Versioning].
 
 - Initial functionality
 
-[Keep a Changelog]: https://keepachangelog.com/en/1.0.0/
-[markdownlint]: https://dlaa.me/markdownlint/
-[Semantic Versioning]: https://semver.org/spec/v2.0.0.html
+[CommonMark]: https://commonmark.org/
+[Keep a Changelog]: https://keepachangelog.com/
+[Semantic Versioning]: https://semver.org/
