@@ -8,12 +8,17 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+const (
+	commandName      = "command-name"
+	avoidServingFlag = "--avoid-serving"
+)
+
 // ----------------------------------------------------------------------------
 // Test public functions
 // ----------------------------------------------------------------------------
 
 func Test_CompletionCmd(test *testing.T) { //nolint
-	os.Args = []string{"command-name", "--avoid-serving"}
+	os.Args = []string{commandName, avoidServingFlag}
 	err := cmd.CompletionCmd.Execute()
 	require.NoError(test, err)
 	err = cmd.CompletionCmd.RunE(cmd.CompletionCmd, []string{})
@@ -21,7 +26,7 @@ func Test_CompletionCmd(test *testing.T) { //nolint
 }
 
 func Test_DocsCmd(test *testing.T) { //nolint
-	os.Args = []string{"command-name", "--avoid-serving"}
+	os.Args = []string{commandName, avoidServingFlag}
 	err := cmd.DocsCmd.Execute()
 	require.NoError(test, err)
 	err = cmd.DocsCmd.RunE(cmd.DocsCmd, []string{})
@@ -29,31 +34,31 @@ func Test_DocsCmd(test *testing.T) { //nolint
 }
 
 func Test_Execute(_ *testing.T) { //nolint
-	os.Args = []string{"command-name", "--avoid-serving"}
+	os.Args = []string{commandName, avoidServingFlag}
 
 	cmd.Execute()
 }
 
 func Test_Execute_completion(_ *testing.T) { //nolint
-	os.Args = []string{"command-name", "completion"}
+	os.Args = []string{commandName, "completion"}
 
 	cmd.Execute()
 }
 
 func Test_Execute_docs(_ *testing.T) { //nolint
-	os.Args = []string{"command-name", "docs"}
+	os.Args = []string{commandName, "docs"}
 
 	cmd.Execute()
 }
 
 func Test_Execute_help(_ *testing.T) { //nolint
-	os.Args = []string{"command-name", "--help"}
+	os.Args = []string{commandName, "--help"}
 
 	cmd.Execute()
 }
 
 func Test_PreRun(_ *testing.T) { //nolint
-	args := []string{"command-name", "--help"}
+	args := []string{commandName, "--help"}
 	cmd.PreRun(cmd.RootCmd, args)
 }
 
