@@ -8,12 +8,14 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+const avoidServingFlag = "--avoid-serving"
+
 // ----------------------------------------------------------------------------
 // Test public functions
 // ----------------------------------------------------------------------------
 
 func Test_CompletionCmd(test *testing.T) { //nolint
-	os.Args = []string{"command-name", "--avoid-serving"}
+	os.Args = []string{"command-name", avoidServingFlag}
 	err := cmd.CompletionCmd.Execute()
 	require.NoError(test, err)
 	err = cmd.CompletionCmd.RunE(cmd.CompletionCmd, []string{})
@@ -21,7 +23,7 @@ func Test_CompletionCmd(test *testing.T) { //nolint
 }
 
 func Test_DocsCmd(test *testing.T) { //nolint
-	os.Args = []string{"command-name", "--avoid-serving"}
+	os.Args = []string{"command-name", avoidServingFlag}
 	err := cmd.DocsCmd.Execute()
 	require.NoError(test, err)
 	err = cmd.DocsCmd.RunE(cmd.DocsCmd, []string{})
@@ -29,7 +31,7 @@ func Test_DocsCmd(test *testing.T) { //nolint
 }
 
 func Test_Execute(_ *testing.T) { //nolint
-	os.Args = []string{"command-name", "--avoid-serving"}
+	os.Args = []string{"command-name", avoidServingFlag}
 
 	cmd.Execute()
 }
