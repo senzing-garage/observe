@@ -2,7 +2,7 @@
 # Stages
 # -----------------------------------------------------------------------------
 
-ARG IMAGE_BUILDER=golang:1.25.5-bookworm@sha256:d9132cce84391efab786495288756d60e1da215b1f94e87860aeefc3d4c45b6d
+ARG IMAGE_BUILDER=golang:1.27.1-bookworm@sha256:648f440f42a0958804efb24df176f806f9d353b41f1c0627f666428e40310f6b
 ARG IMAGE_FPM=dockter/fpm:1.1.0@sha256:a92ac598d35f1a7a4a659e26bd0e1bd25f317aafdcd4be8bf2795314c421d89b
 ARG IMAGE_FINAL=alpine@sha256:5b10f432ef3da1b8d4c7eb6c487f2f5a8f096bc91145e68878dd4a5019afde11
 
@@ -11,7 +11,7 @@ ARG IMAGE_FINAL=alpine@sha256:5b10f432ef3da1b8d4c7eb6c487f2f5a8f096bc91145e68878
 # -----------------------------------------------------------------------------
 
 FROM ${IMAGE_BUILDER} AS builder
-ENV REFRESHED_AT=2026-01-06
+ENV REFRESHED_AT=2026-10-08
 LABEL Name="senzing/go-builder" \
       Maintainer="support@senzing.com" \
       Version="0.1.0"
@@ -45,7 +45,7 @@ RUN mkdir -p /output \
 # -----------------------------------------------------------------------------
 
 FROM ${IMAGE_FPM} AS fpm
-ENV REFRESHED_AT=2026-01-06
+ENV REFRESHED_AT=2026-10-08
 LABEL Name="senzing/fpm-builder" \
       Maintainer="support@senzing.com" \
       Version="0.1.0"
@@ -89,7 +89,7 @@ RUN fpm \
 # -----------------------------------------------------------------------------
 
 FROM ${IMAGE_FINAL} AS final
-ENV REFRESHED_AT=2026-01-06
+ENV REFRESHED_AT=2026-10-08
 LABEL Name="senzing/final-stage" \
       Maintainer="support@senzing.com" \
       Version="0.1.0"

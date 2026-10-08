@@ -17,5 +17,5 @@ type Observer interface {
 // Constants
 // ----------------------------------------------------------------------------
 
-// Identfier of the  package found messages having the format "senzing-6207xxxx".
+// Identifier of the package found messages having the format "senzing-6207xxxx".
 const ComponentID = 6207
