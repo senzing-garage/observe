@@ -9,6 +9,18 @@ This project adheres to [Semantic Versioning].
 
 -
 
+## [0.4.0] - 2026-10-08
+
+### Changed in 0.4.0
+
+- Update to Go 1.27.1
+- Sync repository setup files with template-go `v0.5.0`
+- Update dependencies:
+  - github.com/senzing-garage/go-cmdhelping v0.4.0
+  - github.com/senzing-garage/go-helpers v0.7.0
+  - github.com/senzing-garage/go-observing v0.4.0
+  - google.golang.org/grpc v1.84.0
+
 ## [0.3.4] - 2026-01-06
 
 ### Changed in 0.3.4
